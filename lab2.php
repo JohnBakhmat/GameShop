@@ -14,17 +14,22 @@
 		//відкриття з'єднання з базою даних
 		public function __construct(string $path = null)
 		{
-			$this->db = new SQLite3($path);
+			try {
+				$this->db = new SQLite3($path);
+				$this->db->enableExceptions(true);
+			} catch (Exception $e) {
+				echo 'Поймано исключение: ' . $e->getMessage() . '<br>';
+			}
 		}
 
 		//Для CREATE, INSERT
-		public function Execute(string $query)
+		private function Execute(string $query)
 		{
 			$this->db->exec($query);
 		}
 
 		//Для SELECT
-		public function Query($query)
+		private function Query($query)
 		{
 			return $this->db->query($query);
 		}
@@ -38,27 +43,68 @@
 		//Створити таблиці бази даних.
 		public function Create()
 		{
-			$this->Execute('');
+			try {
+				$this->Execute("
+				DROP TABLE GAME;
+				CREATE TABLE GAME (
+				ID INTEGER PRIMARY KEY,
+				Game_Name TEXT,
+				Developer TEXT,
+				Publisher TEXT,
+				Engine TEXT,
+				Release_Year INTEGER,
+				Price REAL
+			);");
+			} catch (Exception $e) {
+				echo 'Поймано исключение: ' . $e->getMessage() . '<br>';
+			}
 		}
-
 		//Написати метод додавання даних в таблиці.
-		public function PopulateTables()
+		public function Populate()
 		{
-			$this->Execute('');
+			try {
+				$this->Execute("INSERT INTO G VALUES (1,'Enter the Gungeon','Dodge Roll','Devolver Digital','Unity',2017,14.99); INSERT INTO GAME VALUES (2,'Stardew Valley','ConcernedApe','ConcernedApe','Microsoft XNA',2016,14.99);");
+			} catch (Exception $e) {
+				echo 'Поймано исключение: ' . $e->getMessage() . '<br>';
+			}
+			// INSERT INTO GAME VALUES ('Animal Crossing: New Horizons','Nintendo EPD','Nintendo','Custom','Switch',2020,59.99);
 		}
 
 		//Реалізувати метод видалення запису з таблиці.
 		public function Remove()
 		{
-			$this->Execute('');
+			try {
+				$this->Execute('DELETE FROM GAME WHERE ID = 1');
+			} catch (Exception $e) {
+				echo 'Поймано исключение: ' . $e->getMessage() . '<br>';
+			}
+		}
+
+		public function Select()
+		{
+			try {
+				$results = $this->Query('SELECT * FROM GAME');
+				$array = new ArrayObject();
+				$indexer = 0;
+				while ($row = $results->fetchArray()) {
+					$array[$indexer] = $row;
+					$indexer++;
+				}
+			} catch (Exception $e) {
+				echo 'Поймано исключение: ' . $e->getMessage() . '<br>';
+			}
+			return $array;
 		}
 	}
 
 	$db = new DbController("./app.db");
-	$db->Execute('CREATE TABLE foo (bar TEXT)');
-	$db->Execute("INSERT INTO foo (bar) VALUES ('This is a test')");
-
-	$result = $db->Query('SELECT bar FROM foo');
-	var_dump($result->fetchArray());
+	$db->Create();
+	$db->Populate();
+	$array = $db->Select();
+	var_dump($array);
+	$db->Remove();
+	$array = $db->Select();
+	echo "<br><br>";
+	var_dump($array);
 	?>
 </body>

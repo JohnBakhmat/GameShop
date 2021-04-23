@@ -67,6 +67,7 @@
 				<div class="container-fluid">
 					<h3 class="text-dark mb-4">Our games</h3>
 					<a class="btn btn-success" href="lab1.php">Lab1</a>
+					<a class="btn btn-success" href="lab2.php">Lab2</a>
 					<div class="card shadow">
 						<div class="card-header py-3">
 							<p class="text-primary m-0 font-weight-bold">Info</p>
@@ -93,7 +94,7 @@
 											<td>Devolver Digital</td>
 											<td>Unity</td>
 											<td>Windows, OSX, Linux, PS4, Xbox One, Switch</td>
-											<td>2016-2017</td>
+											<td>2017</td>
 											<td>14.99 $</td>
 										</tr>
 										<tr>

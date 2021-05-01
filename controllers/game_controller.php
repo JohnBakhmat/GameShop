@@ -1,12 +1,7 @@
-<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
-<link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
-
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.24/datatables.min.css" />
-<a class="btn btn-success" href="index.php">Go back</a>
-
-<body class="text-dark font-weight-bolder h3 m-3 p-3">
+<body>
 	<?php
+	require __DIR__ . '/../functions/file.php';
+	require __DIR__ . '/../models/game.php';
 	class DbController
 	{
 		public SQLite3 $db;
@@ -59,35 +54,33 @@
 				echo 'Поймано исключение: ' . $e->getMessage() . '<br>';
 			}
 		}
-		//Написати метод додавання даних в таблиці.
-		public function Populate()
+		public function Add(Game $game)
 		{
 			try {
-				$this->Execute("INSERT INTO G VALUES (1,'Enter the Gungeon','Dodge Roll','Devolver Digital','Unity',2017,14.99); INSERT INTO GAME VALUES (2,'Stardew Valley','ConcernedApe','ConcernedApe','Microsoft XNA',2016,14.99);");
+				$this->Execute("INSERT INTO GAME VALUES (" + $game->__toString() + ");");
 			} catch (Exception $e) {
 				echo 'Поймано исключение: ' . $e->getMessage() . '<br>';
 			}
-			// INSERT INTO GAME VALUES ('Animal Crossing: New Horizons','Nintendo EPD','Nintendo','Custom','Switch',2020,59.99);
 		}
-
 		//Реалізувати метод видалення запису з таблиці.
-		public function Remove()
+		public function Remove(int $id)
 		{
 			try {
-				$this->Execute('DELETE FROM GAME WHERE ID = 1');
+				$this->Execute('DELETE FROM GAME WHERE ID = ' . $id);
 			} catch (Exception $e) {
 				echo 'Поймано исключение: ' . $e->getMessage() . '<br>';
 			}
 		}
 
-		public function Select()
+		public function SelectALL()
 		{
 			try {
 				$results = $this->Query('SELECT * FROM GAME');
-				$array = new ArrayObject();
+				$array = array();
 				$indexer = 0;
 				while ($row = $results->fetchArray()) {
-					$array[$indexer] = $row;
+					$game = new Game($row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7]);
+					$array[$indexer] = $game;
 					$indexer++;
 				}
 			} catch (Exception $e) {
@@ -96,15 +89,7 @@
 			return $array;
 		}
 	}
+	(new DbController('../app.db'))->SelectALL();
 
-	$db = new DbController("./app.db");
-	$db->Create();
-	$db->Populate();
-	$array = $db->Select();
-	var_dump($array);
-	$db->Remove();
-	$array = $db->Select();
-	echo "<br><br>";
-	var_dump($array);
 	?>
 </body>

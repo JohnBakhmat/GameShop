@@ -38,9 +38,9 @@ login, password;
 ✓ 2. в класі SuperUsers описати метод getInfo (), який буде виводити
 значення цих властивостей;
 ✓ 3. розробити заново об'єкт класу SuperUsers і викликати метод getInfo(); -->
-<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
-<link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+<link rel="stylesheet" href="../assets/fonts/fontawesome-all.min.css">
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.24/datatables.min.css" />
 <a class="btn btn-success" href="index.php">Go back</a>

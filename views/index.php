@@ -5,9 +5,9 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 	<title>Table - Brand</title>
-	<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
-	<link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+	<link rel="stylesheet" href="../assets/fonts/fontawesome-all.min.css">
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.24/datatables.min.css" />
 
 
@@ -66,8 +66,16 @@
 				</nav>
 				<div class="container-fluid">
 					<h3 class="text-dark mb-4">Our games</h3>
-					<a class="btn btn-success" href="lab1.php">Lab1</a>
-					<a class="btn btn-success" href="lab2.php">Lab2</a>
+					<div class="row">
+						<div class="m-2">
+							<a class="btn btn-success" href="lab1.php">Lab1</a>
+							<a class="btn btn-success" href="lab2.php">Lab2</a>
+						</div>
+						<div class="m-2">
+							<a class="btn btn-success" href="pz1_2.php">PZ1+PZ2</a>
+							<a class="btn btn-success" href="pz3.php">PZ3</a>
+						</div>
+					</div>
 					<div class="card shadow">
 						<div class="card-header py-3">
 							<p class="text-primary m-0 font-weight-bold">Info</p>
@@ -78,150 +86,128 @@
 								<table id="example" class="text-dark table table-bordered" style="width:100%">
 									<thead class="thead-dark">
 										<tr>
+											<th>Id</th>
 											<th>Game Name</th>
 											<th>Developer</th>
 											<th>Publisher</th>
 											<th>Engine</th>
-											<th>Platforms</th>
 											<th>Release Year</th>
 											<th>Price</th>
 										</tr>
 									</thead>
-									<tbody class="tbody-dark">
-										<tr>
-											<td>Enter the Gungeon</td>
-											<td>Dodge Roll</td>
-											<td>Devolver Digital</td>
-											<td>Unity</td>
-											<td>Windows, OSX, Linux, PS4, Xbox One, Switch</td>
-											<td>2017</td>
-											<td>14.99 $</td>
-										</tr>
-										<tr>
-											<td>Stardew Valley</td>
-											<td>ConcernedApe</td>
-											<td>ConcernedApe</td>
-											<td>Microsoft XNA</td>
-											<td>Windows, OSX, Linux, PS4, Xbox One, Switch, PSVita, IOS, Android</td>
-											<td>2016</td>
-											<td>14.99&nbsp;$</td>
-										</tr>
-										<tr>
-											<td>Animal Crossing: New Horizons</td>
-											<td>Nintendo EPD</td>
-											<td>Nintendo</td>
-											<td>Custom</td>
-											<td>Switch</td>
-											<td>2020</td>
-											<td>59.99&nbsp;$</td>
-										</tr>
-										<tr>
-											<td>Mortal Kombat 11</td>
-											<td>NetherRealm Studios</td>
-											<td>WB Games</td>
-											<td>Unreal Engine 3</td>
-											<td>PS4, PS5, Switch, Windows, Xbox One, XBox SX</td>
-											<td>2019</td>
-											<td>14.99&nbsp;$</td>
-										</tr>
-										<tr>
-											<td>Dead by Daylight</td>
-											<td>Behaviour Interactive</td>
-											<td>Behaviour Interactive</td>
-											<td>Unreal Engine 4</td>
-											<td>PS4, PS5, Switch, Windows, Xbox One, XBox Series X/S, Android, iOS</td>
-											<td>2016</td>
-											<td>9.99&nbsp;$</td>
-										</tr>
-										<tr>
-											<td>Megaman 11</td>
-											<td>Capcom</td>
-											<td>Capcom</td>
-											<td>MT Framework</td>
-											<td>Windows, PS4, Xbox One, Switch</td>
-											<td>2018</td>
-											<td>29.99&nbsp;$</td>
-										</tr>
-										<tr>
-											<td>Monster Hunter: Rise</td>
-											<td>Capcom</td>
-											<td>Capcom</td>
-											<td>RE Engine</td>
-											<td>Switch</td>
-											<td>2021</td>
-											<td>59.99&nbsp;$</td>
-										</tr>
-										<tr>
-											<td>Don't Starve</td>
-											<td>Klei Entertainment</td>
-											<td>Klei Entertainment</td>
-											<td>Custom</td>
-											<td>Windows, Linux, PS3, IOS, PSVita, Android, Wii U, PS4, Xbox One, Switch</td>
-											<td>2018</td>
-											<td>29.99&nbsp;$</td>
-										</tr>
-										<tr>
-											<td>Doom Eternal</td>
-											<td>id Software</td>
-											<td>Bethesda Softworks</td>
-											<td>id Tech 7</td>
-											<td>Windows, PS4, Xbox One, Switch</td>
-											<td>2020</td>
-											<td>59,99 $</td>
-										</tr>
-										<tr>
-											<td>Doom 3</td>
-											<td>id Software</td>
-											<td>Activision</td>
-											<td>id Tech 4</td>
-											<td>Windows, Linux, PS4, Xbox One, Switch</td>
-											<td>2004-2007</td>
-											<td>19,99 $</td>
-										</tr>
-										<tr>
-											<td>GTA 3</td>
-											<td>id Software</td>
-											<td>Activision</td>
-											<td>id Tech 4</td>
-											<td>Windows, Linux, PS4, Xbox One, Switch</td>
-											<td>2004-2007</td>
-											<td>2,49 $</td>
-										</tr>
+									<tbody>
+										<?php
+										require __DIR__ . '/../controllers/game_controller.php';
+										$games = (new DbController('../app.db'))->SelectALL();
+										foreach ($games as $game) {
+											echo '<tr>';
+											echo '<td>' . $game->Id . '</td>';
+											echo '<td>' . $game->Name . '</td>';
+											echo '<td>' . $game->Developer . '</td>';
+											echo '<td>' . $game->Publisher . '</td>';
+											echo '<td>' . $game->Engine . '</td>';
+											echo '<td>' . $game->Year . '</td>';
+											echo '<td>' . $game->Price . '</td>';
+											echo '</tr>';
+										}
+										?>
 									</tbody>
-									<tfoot class="thead-dark">
-										<tr>
-											<th>Game Name</th>
-											<th>Developer</th>
-											<th>Publisher</th>
-											<th>Engine</th>
-											<th>Platforms</th>
-											<th>Release Year</th>
-											<th>Price</th>
-										</tr>
-									</tfoot>
 								</table>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<footer class="bg-white sticky-footer">
-				<div class="container my-auto">
-					<div class="text-center my-auto copyright"><span>Copyright © Connected 2020</span></div>
+			<hr>
+			<?php
+			$agent = $_SERVER['HTTP_USER_AGENT'];
+			$uri = $_SERVER['REQUEST_URI'];
+			$user = $_SESSION['email'];
+			$ip = $_SERVER['REMOTE_ADDR'];
+			$ref = $_SERVER['HTTP_REFERER'];
+			$dtime = date('r');
+
+			if ($ref == "") {
+				$ref = "None";
+			}
+			if ($user == "") {
+				$user = "None";
+			}
+
+			$entry_line = "$dtime - IP: $ip | Agent: $agent | URL: $uri | Referrer: $ref | Username: $user \n";
+			$fp = fopen("logs.txt", "a");
+			fputs($fp, $entry_line);
+			fclose($fp);
+			?>
+
+			<?php
+			$file = file("logs.txt");
+			$col = sizeof($file);
+			?>
+			<div class="row wrap-box">
+				<div class="header">
+					<div class="wrapper" style="text-align: center; margin: 2%;">
+						<?php
+						echo "<h3 >Последние <b>" . $col . "</b> посещений сайта:</h3>";
+						?>
+					</div>
 				</div>
-			</footer>
-		</div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
-	</div>
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
-	<script src="assets/js/theme.js"></script>
-	<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.24/datatables.min.js"></script>
-	<script>
-		$(document).ready(function() {
-			$('#example').DataTable();
-		});
-	</script>
+				<div class="card shadow">
+					<div class="card-header py-3">
+						<p class="text-primary m-0 font-weight-bold">Info</p>
+					</div>
+					<div class="card-body">
+						<div class="table-responsive table mt-2" id="dataTable-div" role="grid" aria-describedby="dataTable_info">
+							<table id="example2" class="text-dark table table-bordered" style="width:100%">
+								<thead class="thead-dark">
+									<tr>
+										<td width="100"><b>Время и дата</b></td>
+										<td width="200"><b>Данные о посетителе</b></td>
+										<td width="280"><b>IP/прокси</b></td>
+										<td width="200"><b>Посещенный URL</b></td>
+										<td width="200"><b>Имя пользователя</b></td>
+									</tr>
+								</thead>
+								<tbody>
+									<?php
+									for ($si = sizeof($file) - 1; $si + 1 > sizeof($file) - $col; $si--) {
+										$string = explode("|", $file[$si]);
+										$q1[$si] = $string[0];
+										$q2[$si] = $string[1];
+										$q3[$si] = $string[2];
+										$q4[$si] = $string[3];
+										$q5[$si] = $string[4];
+										echo '<tr><td>' . $q1[$si] . '</td>';
+										echo '<td>' . $q3[$si] . '</td>';
+										echo '<td>' . $q2[$si] . '</td>';
+										echo '<td>' . $q4[$si] . '</td>';
+										echo '<td>' . $q5[$si] . '</td></tr>';
+									}
+									?>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<hr>
+				<footer class="bg-white sticky-footer">
+					<div class="container my-auto">
+						<div class="text-center my-auto copyright"><span>Copyright © Connected 2020</span></div>
+					</div>
+				</footer>
+			</div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+		</div>
+		<script src="../assets/js/jquery.min.js"></script>
+		<script src="../assets/bootstrap/js/bootstrap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+		<script src="../assets/js/theme.js"></script>
+		<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.24/datatables.min.js"></script>
+		<script>
+			$(document).ready(function() {
+				$('#example').DataTable();
+				$('#example2').DataTable();
+			});
+		</script>
 </body>
 
 </html>
